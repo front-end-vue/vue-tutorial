@@ -7,21 +7,45 @@
 <body>
 <section id="app">
     <p>{{message}}</p>
-<span v-bind:title="message">
-    내 위에 잠시 마우스를 올리면 동적으로 바인딩 된 title을 볼 수 있습니다!
-</span>
-    <p>{{money}}</p>
+    <span v-bind:title="message">내 위에 잠시 마우스를 올리면 동적으로 바인딩 된 title을 볼 수 있습니다!</span>
+</section>
+<section id="app3">
+    <p v-if="seen">보일락말락 아일락</p>
+</section>
+<section id="app4">
+    <ol>
+        <li v-for="todo in todos">
+            {{todo.name}}, {{todo.time}}
+        </li>
+    </ol>
+
 </section>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
     var app2 = new Vue({
-        el : "#app",
-        data : {
-            "message":`안녕하세요 뷰${new Date()}`
+        el: "#app",
+        data: {
+            "message": `안녕하세요 뷰${new Date()}`
         }
     })
-    app2.message = "vv";
-    app2.money = 2;
+
+    var app3 = new Vue({
+        el: "#app3",
+        data: {
+            "seen": true,
+        }
+    })
+
+    var app4 = new Vue({
+        el: "#app4",
+        data: {
+            todos: [
+                {"name": "hungry", "time": "3"},
+                {"name": "hungry", "time": "7"},
+                {"name": "hungry", "time": "10"},
+            ]
+        }
+    })
 </script>
 </body>
 </html>
