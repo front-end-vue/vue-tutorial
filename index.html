@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Vue Tutorial</title>
 </head>
 <body>
-
+<section id="app">
+    <p>{{message}}</p>
+<span v-bind:title="message">
+    내 위에 잠시 마우스를 올리면 동적으로 바인딩 된 title을 볼 수 있습니다!
+</span>
+    <p>{{money}}</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var app2 = new Vue({
+        el : "#app",
+        data : {
+            "message":`안녕하세요 뷰${new Date()}`
+        }
+    })
+    app2.message = "vv";
+    app2.money = 2;
+</script>
 </body>
 </html>
