@@ -32,6 +32,7 @@
     <ol>
         <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
     </ol>
+
 </section>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -73,6 +74,7 @@
             "message": `안녕하세요 뷰${new Date()}`
         }
     })
+    app2.hi="hi";
 
     var app3 = new Vue({
         el: "#app3",
