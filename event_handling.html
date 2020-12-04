@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Event Handling</title>
+</head>
+<body>
+<section id="example-1">
+    <button @click="counter += 1">Add</button>
+    <p>위 버튼을 클릭한 횟수는 {{ counter }} 번 입니다.</p>
+</section>
+<section id="example-2">
+    <button @click="greeting">Add</button>
+    <p>위 버튼을 클릭한 횟수는 {{ counter }} 번 입니다.</p>
+</section>
+<section id="example-3">
+    <button @click="say('hi')">Say hi</button>
+    <button @click="say('what')">Say what</button>
+    <button @click="warn('Form cannot be submitted yet.', $event)">Submit</button>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var example1 = new Vue({
+        el: "#example-1",
+        data: {
+            counter: 0
+        }
+    })
+    var example2 = new Vue({
+        el: "#example-2",
+        data: {
+            counter: 0
+        },
+        methods : {
+            greeting : function(event){
+                ++this.counter;
+            }
+        }
+    })
+    var example3 = new Vue({
+        el: "#example-3",
+        methods : {
+            say:function(message){
+                console.log(message);
+            },
+            warn : function(message, event){
+                if (event) event.preventDefault()
+                console.log(message);
+            }
+        }
+    })
+</script>
+</body>
+</html>
