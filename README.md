@@ -231,3 +231,137 @@ v- 접두사는 템플릿의 Vue 특정 속성을 식별하기 위한 시각적�
 <a @[event]="doSomething">...</a>
 ```
 이들은 일반적인 HTML과 조금 다르게 보일 수 있습니다. 하지만 :와 @ 속성 이름에 유효한 문자이며 Vue.js를 지원하는 모든 브라우저는 올바르게 구문 분석을 할 수 있습니다. 또한 최종 렌더링 된 마크업에는 나타나지 않습니다. 약어는 완전히 선택사항이지만 나중에 익숙해지면 편할 것 입니다.
+
+
+
+
+## computed와 watch
+ 템플릿 내에 표현식을 넣으면 편리합니다. 하지만 간단한 연산일 때만 이용하는 것이 좋습니다. 너무 많은 연산을 템플릿 안에서 하면 코드가 비대해지고 유지보수가 어렵습니다.
+```html
+<div id="example">
+    {{ message.split(''}.reverse().join('') }
+</div>
+```
+이 템플릿은 더 이상 간단하고 명료하지 않습니다. message를 역순으로 표시한다는 것을 알려면 찬찬히 살펴봐야 합니다. 템플릿에 역순할 일이 더 많아진다면 힘듬
+복잡한 로직이라면 반드시 computed 속성을 사용해야 하는 이유입니다.
+
+#### 기본 예제
+```html
+<div id="example">
+    <p>원본 메세지 : "{{ message }}"</p>
+    <p>역순으로 표시한 메시지 : "{{ reverseMessage }}"</p>
+</div>
+```
+
+```js
+var vm = new Vue({
+    el : "#example",
+    data : {
+        message : "안녕하세요"
+    },
+    computed : {
+        // 계산된 getter
+        reverseMessage : function(){
+            // 'this'는 vm 인스턴스를 가리킵니다.
+            return this.message.split('').reverse().join('')
+        }
+    }
+});
+```
+#### computed 속성의 캐싱 vs 메소드
+표현식에서 메소드를 호출하여 같은 결과를 얻을 수 도있습니다.
+```html
+<p>뒤집힌 메시지: "{{ reversedMessage() }}"</p>
+```
+
+```js
+// 컴포넌트 내부
+methods: {
+  reversedMessage: function () {
+    return this.message.split('').reverse().join('')
+  }
+}
+```
+computed 속성 대신 메소드와 같은 함수를 정의할 수도 있습니다. 최종 결과에 대해 두 가지 접근 방식은 서로 동일합니다. 차이점은 computed 속성은 종속 대사을 따라 저장(캐싱)된다는 것 입니다. computed 속성은 해당 속성이 종속된 대상이 변경될 때만 함수를 실행합니다. 즉 message가 변경되지 않는 한 computed 속성인 reverseMessage를 여러 번 요청해도 계산을 다시 하지 않고 계산되어 있던 결과를 즉시 반환합니다. 또한 Date.now()처럼 아무 곳에도 의존하지 않는 computed 속성의 경우 절대로 업데이트되지 않는다는 뜻입니다.
+
+```js
+computed: {
+  now: function () {
+    return Date.now()
+  }
+}
+```
+이에 비해 메소드를 호출하면 렌더링을 다시 할 때마다 항상 함수를 실행합니다.
+
+캐싱이 왜 필요할까요? 계산에 시간이 많이 걸리는 computed 속성인 A를 가지고 있다고 해봅시다. 이 속성을 계산하려면 거대한 배열을 반복해서 다루고 많은 계산을 해야합니다. 그런데 A 에 의존하는 다른 computed 속성 값도 있을 수 있습니다. 캐싱을 하지 않으면 A의 getter함수를 꼭 필요한 것보다 더 많이 실행하게 됩니다! 캐싱을 원하지 않는 경우 메소드를 사용하십시오.
+
+#### computed 속성 vs watch 속성
+Vue는 Vue인스턴스의 데이터 변경을 관찰하고 이에 반응하는 보다 일반적인 watch 속성을 제공합니다. 다른 데이터 기반으로 변경할 필요가 있는 데이터가 있는 경우, 특히 AngularJS를 사용하던 경우 watch를 남용하는 경우가 있습니다. 하지만 명령적인 watch 콜백보다 computed 속성을 사용하는 것이 더 좋습니다. (역자 주: watch 속성은 감시할 데이터를 지정하고 그 데이터가 바뀌면 이런 함수를 실행하라는 방식으로 소프트웨어 공학에서 이야기하는 '명령형 프로그래밍'방식. computed속성은 계산해야 하는 목표 데이터를 정의하는 방식으로 소프트웨어 공학에서 이야기하는 '선언형 프로그래밍'방식 )
+```html
+<div id="demo">{{ fullName }}</div>
+```
+
+```js
+var vm = new Vue({
+    el : "#demo",
+    data : {
+        firstName : 'Foo',
+        lastName : 'Bar',
+        fullName : 'Foo Bar'
+    },
+    watch:{
+        firstName : function(val){
+            this.fullName = val + ' ' + this.lastName
+        },
+        lastName : function(val){
+            this.fullName = this.firstName + ' ' + val
+        }
+    }
+})
+```
+위의 코드는 명령형이고 또 코드를 반복합니다. computed속성을 사용하는 방식과 비교해 보세요.
+
+```js
+
+var vm = new Vue({
+  el: '#demo',
+  data: {
+    firstName: 'Foo',
+    lastName: 'Bar'
+  },
+  computed: {
+    fullName: function () {
+      return this.firstName + ' ' + this.lastName
+    }
+  }
+})
+```
+더 낫지 않나요? ( 역자 주 : 일반적으로 선언형 프로그래밍이 명령형 프로그래밍보다 코드 반복이 적은 등 우수하다고 평가하는 경향이 있음.)
+
+#### computed 속성의 setter 함수
+computed 속성은 기본적으로 getter 함수만 가지고 있지만, 필요한 경우 setter 함수를 만들어 쓸 수 있습니다.
+```js
+var vm = new Vue({
+    el: '#example',
+    data : {
+        firstName : 'Foo',
+        lastName : 'Bar',
+    }
+    computed : {
+        fullName : {
+            get : function(){
+                return this.firstName + ' ' + this.lastName
+            },
+            set : function(newValue){
+                var names = newValue.split(' ')
+                this.firstName = names[0]
+                this.lastName = names[names.length - 1]
+            }
+        }
+    }
+})
+```
+이제 vm.fullName = 'John Doe'를 실행하면 설정자가 호출되고 vm.firstName 과 vm.lastName이 그에 따라 업데이트 됩니다.
+
+### Watch 속성
+ 대부분의 경우
