@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>quiz_03_03</title>
+</head>
+<body>
+<header>
+    <h1>QUIZ03 - 03</h1>
+</header>
+<section id="app">
+    <child-component :propsdata="message"></child-component>
+    <sibling-component :another-message="anotherMessage"></sibling-component>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('sibling-component', {
+        props: ['anotherMessage'],
+        template: "<p>{{ anotherMessage }}</p>"
+    })
+    Vue.component('child-component', {
+        props: ['propsdata'],
+        template: '<p>{{ propsdata }}</p>'
+    })
+
+    var app = new Vue({
+        el : "#app",
+        data : {
+            message : "hello! vue passed from Parent Component",
+            anotherMessage : "hihihi",
+        }
+    })
+</script>
+</body>
+</html>
