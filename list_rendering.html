@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Tutorial</title>
+</head>
+<body>
+<ul id="example-1">
+    <li v-for="item of items">
+        {{ item.message }}
+    </li>
+</ul>
+<ul id="example-2">
+    <li v-for="(item, index) in items">
+        {{parentMessage }} - {{ index }} - {{ item.message }}
+    </li>
+</ul>
+<ul id="v-for-object" class="demo">
+    <li v-for="value in object">
+        {{ value }}
+    </li>
+    <li v-for="(value, name) in object">
+        {{ name }} : {{ value }}
+    </li>
+    <li v-for="(value, name, index) in object">
+        {{index}}.{{ name }} : {{ value }}
+    </li>
+</ul>
+<section id="todo-list-example">
+    <form @submit.prevent="addNewTodo">
+        <label for="new-todo">Add a todo</label>
+        <input
+                v-model="newTodoText"
+                id="new-todo"
+                placeholder="E.g. Feed the cat"
+                type="text"
+        >
+        <button>Add</button>
+    </form>
+    <ul>
+        <li
+                is="todo-item"
+                v-for="(todo, index) in todos"
+                :key="todo.id"
+                :title="todo.title"
+                @remove="todos.splice(index,1)"
+        ></li>
+    </ul>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    var example1 = new Vue({
+        el: "#example-1",
+        data: {
+            items: [
+                {message: 'Foo'},
+                {message: 'Bar'},
+            ]
+        }
+    })
+    var example2 = new Vue({
+        el: "#example-2",
+        data: {
+            parentMessage: "Parent",
+            items: [
+                {message: 'Foo'},
+                {message: 'Bar'},
+            ]
+        }
+    })
+
+    var vForObject = new Vue({
+        el: "#v-for-object",
+        data: {
+            object: {
+                title: "how to do lists in Vue",
+                author: "Jane Doe",
+                publishedAt: "2016-04-10"
+            }
+        }
+    })
+    Vue.component('todo-item', {
+        template: '\
+        <li>\
+        {{title}}\
+        <button @click="$emit(\'remove\')">Remove</button>\
+        </li>\
+        ',
+        props: ['title']
+    })
+    var todoItemExampleVM = new Vue({
+        el: "#todo-list-example",
+        data: {
+            newTodoText: '',
+            todos: [
+                {
+                    id: 1,
+                    title: "밥먹기"
+                },
+                {
+                    id: 2,
+                    title: "눕기"
+                },
+                {
+                    id: 3,
+                    title: "자기"
+                },
+            ],
+            nextTodoId: 4,
+        },
+        methods: {
+            addNewTodo: function () {
+                this.todos.push({
+                    id: this.nextTodoId++,
+                    title: this.newTodoText
+                })
+                this.newTodoText = ''
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
