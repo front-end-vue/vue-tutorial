@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>뷰 컴포넌트 등록하기</title>
+</head>
+<body>
+<section id="app">
+    <button type="button">{{ buttonText }}</button>
+    <my-component></my-component>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component("my-component", {
+        template : '<div>전역 컴포넌트가 등록되었습니다.</div>'
+    })
+    new Vue({
+        el: "#app",
+        data: {
+            buttonText: "뷰 컴포넌트 등록"
+        }
+    });
+</script>
+</body>
+</html>
