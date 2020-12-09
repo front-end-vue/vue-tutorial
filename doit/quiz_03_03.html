@@ -11,6 +11,10 @@
 <section id="app">
     <child-component :propsdata="message"></child-component>
     <sibling-component :another-message="anotherMessage"></sibling-component>
+    <p v-for="item in items" :key="item.id">
+        {{item.title}}
+    </p>
+    {{items[0]}}
 </section>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
@@ -22,12 +26,18 @@
         props: ['propsdata'],
         template: '<p>{{ propsdata }}</p>'
     })
-
+    var testData = [
+        {id: "1", title: "test1", count: 1, obj_count: 2, plan: "test"},
+        {id: "2", title: "test2", count: 1, obj_count: 2, plan: "test"},
+        {id: "3", title: "test3", count: 1, obj_count: 2, plan: "test"},
+        {id: "4", title: "test4", count: 2, obj_count: 2, plan: "test"},
+    ]
     var app = new Vue({
         el : "#app",
         data : {
             message : "hello! vue passed from Parent Component",
             anotherMessage : "hihihi",
+            items : testData,
         }
     })
 </script>
