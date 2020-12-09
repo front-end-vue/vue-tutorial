@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>뷰 인스턴스 라이프사이클</title>
+</head>
+<body>
+<section id="app">
+    <p>{{ message }}</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            message: "뷰 첫 샘플"
+        },
+        beforeCreate : function(){
+            console.log("beforeCreate");
+        },
+        created:function(){
+            console.log('created');
+        },
+        mounted: function(){
+            console.log("mounted");
+            // 데이터 변경함으로써 beforeUpdate, updated가 실행됨
+            this.message = "안녕 뷰JS!"
+        },
+        updated : function(){
+            // 출력 잘됨
+            console.log("updated");
+        }
+    });
+</script>
+</body>
+</html>
