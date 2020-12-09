@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>v-bind 예제</title>
+</head>
+<body>
+<section id="app">
+    <p :id="idA">아이디 바인딩</p>
+    <p :calss="classA">클래스 바인딩</p>
+    <p :style="styleA">스타일 바인딩</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            idA: 10,
+            classA: 'container',
+            styleA: 'color:blue;',
+        }
+    })
+</script>
+</body>
+</html>

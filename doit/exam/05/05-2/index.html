@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>자바스크립트 표현식 예</title>
+</head>
+<body>
+<section id="app">
+    <p>{{ message }}</p>
+    <p>{{ message + "!!!"}}</p>
+    <p>{{ message.split('').reverse().join('')}}</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            message: "반가우이"
+        }
+    })
+</script>
+</body>
+</html>

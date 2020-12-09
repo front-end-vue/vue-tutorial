@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>자바스크립트 표현식 사용 시 주의할 점</title>
+</head>
+<body>
+<section id="app">
+    <!--{{ var a=10;}} 선언문 사용 불가능-->
+    <!-- {{ if(true) return 100}} 분기문 사용 불가능-->
+    {{ true ? 100 : 0}} <!-- 삼항 연산자 표현식 사용 가능 -->
+
+    {{message.split().reverse().join('')}} <!-- 복잡한 연산식 여기서 하지 말지어다. -->
+    {{reverseMessage}} <!-- 스크립트 computed 속성으로 계산한 최종 값만 표현 -->
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            message: "반가우이"
+        },
+        computed: {
+            reverseMessage: function () {
+                return this.message.split().reverse().join('');
+            }
+        }
+    })
+</script>
+</body>
+</html>
