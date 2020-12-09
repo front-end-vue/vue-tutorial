@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>네스티드 라우터 구현하기</title>
+</head>
+<body>
+<section id="app">
+    <router-view></router-view>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+    var User = {
+        template: '' +
+            '<div>' +
+            'User Component' +
+            '<router-view></router-view>' +
+            '</div>',
+
+    };
+
+    var UserProfile = {template: '<p>User Profile Component</p>'};
+    var UserPost = {template: '<p>User Post Component</p>'};
+
+    var routes = [
+        {
+            path: '/user',
+            component: User,
+            children: [
+                {
+                    path: 'posts',
+                    component: UserPost,
+                },
+                {
+                    path: 'Profile',
+                    component: UserProfile
+                }
+            ]
+
+        }
+    ];
+
+    var router = new VueRouter({
+        routes
+    });
+
+    var app = new Vue({
+        router
+    }).$mount('#app');
+</script>
+</body>
+</html>

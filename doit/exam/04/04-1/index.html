@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>뷰 라우터 실습</title>
+</head>
+<body>
+<section id="app">
+    <h1>뷰 라우터 예제</h1>
+    <p>
+        <router-link to="/main">MAIN</router-link>
+        <router-link to="/login">LOGIN</router-link>
+    </p>
+    <router-view></router-view>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+<script>
+    var main = { "template": '<article>메인 컴포넌트</article>'};
+    var login = { "template": '<article>로그인 컴포넌트</article>'};
+
+    var routes = [
+        { path : '/main', component:main},
+        { path : '/login', component:login},
+    ];
+
+    var router = new VueRouter({
+        mode : 'history',
+        routes
+    });
+
+    var app = new Vue({
+        router
+    }).$mount('#app');
+</script>
+</body>
+</html>
