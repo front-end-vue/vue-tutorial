@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>이벤트를 발생시키고 수신하기</title>
+</head>
+<body>
+<section id="app">
+    <p>{{ message }}</p>
+    <child-component @show-log="printText"></child-component>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('child-component', {
+        template: '<button @click="showLog" type="button">SHOW</button>',
+        methods: {
+            showLog: function () {
+                this.$emit('show-log');
+            }
+        }
+    });
+
+    new Vue({
+        el: "#app",
+        data: {
+            message: "첫 번째 props를 이용한 주입!"
+        },
+        methods:{
+            printText : function(){
+                console.log("received an event");
+            }
+        }
+    });
+</script>
+</body>
+</html>

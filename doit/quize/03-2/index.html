@@ -2,45 +2,34 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>뷰 컴포넌트 등록하기</title>
+    <title>컴포넌트 예제</title>
 </head>
 <body>
 <section id="app">
-    <h3>{{header}}</h3>
-    <my-global-component></my-global-component>
-    <my-local-component></my-local-component>
+    <header>
+        <h3>{{header}}</h3>
+    </header>
+    <todo-footer></todo-footer>
+    <todo-list></todo-list>
+
 </section>
-<section id="app2">
-    <h3>{{header}}</h3>
-    <my-global-component></my-global-component>
-    <my-local-component></my-local-component>
-</section>
+
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script>
-    Vue.component('my-global-component', {
-        template: '<div>전역 컴포넌트입니다.</div>'
+    Vue.component('todo-footer', {
+        'template': '<p>This is another global child component</p>'
     })
-
     let cmp = {
-        // 컴포넌트 내용
-        template: '<div>지역 컴포넌트입니다.</div>'
-
+        'template': '<p>This is another local child component</p>'
     }
-    new Vue({
+    let app = new Vue({
         el: "#app",
         data: {
-            header: "첫 번째 인스턴스 영역"
+            message: 'This is a parent component'
         },
         components: {
-            'my-local-component': cmp,
+            'todo-list': cmp,
         }
-    });
-
-    new Vue({
-        el: "#app2",
-        data: {
-            header: "두 번째 인스턴스 영역"
-        },
     })
 </script>
 </body>

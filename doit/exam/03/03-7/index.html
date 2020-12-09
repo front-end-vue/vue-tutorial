@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>뷰 컴포넌트 유효 범위 증명</title>
+</head>
+<body>
+<section id="app">
+    <h3>{{header}}</h3>
+    <my-component1></my-component1>
+    <my-component2></my-component2>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    let cmp1 = {
+        template: '<div>첫 번째 지역 컴포넌트 : {{ cmp1Data }}</div>',
+        data: function () {
+            return {
+                cmp1Data: 100,
+            }
+        }
+    }
+
+    let cmp2 = {
+        template: '<div>두 번쨰 지역 컴포넌트 : {{ cmp2Data }}</div>',
+        data: function () {
+            return {
+                cmp2Data: cmp1.data.cmp1Data,
+            }
+        }
+    }
+
+    new Vue({
+        el: "#app",
+        data: {
+            header: "첫 번째 인스턴스 영역"
+        },
+        components: {
+            'my-component1': cmp1,
+            'my-component2': cmp2,
+        }
+    });
+</script>
+</body>
+</html>
