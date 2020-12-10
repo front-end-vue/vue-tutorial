@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>5장 1파트 연습문제</title>
+</head>
+<body>
+<section id="app">
+    <h1>{{ header }}</h1>
+    <p :id="uid">uid 바인딩 체크</p>
+    <button @click="changeFlag">flag 변경</button>
+    <p v-if="flag">잘 보일까요?</p>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+    new Vue({
+        el: "#app",
+        data: {
+            header: "5장 연습문제",
+            uid: '20',
+            flag : false,
+        },
+        computed: {
+            computedReverseMessage: function () {
+                console.log("computed call!!");
+                return this.computedMessage.split('').reverse().join('');
+            }
+        },
+        methods: {
+            changeFlag(){
+                this.flag = !this.flag;
+            },
+
+        },
+    })
+</script>
+</body>
+</html>

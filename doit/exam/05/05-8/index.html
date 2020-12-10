@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>computed 속성과 methods 속성의 차이점</title>
+</head>
+<body>
+<section id="app">
+    <h2>Computed 속성 사용</h2>
+    <p>{{ computedReverseMessage }}</p>
+    <p>{{ computedReverseMessage }}</p>
+    <button @click="changeComputedMessage">계산된 메세지에 1더하기</button>
+    <h2>Method 속성 사용</h2>
+    <p>{{ methodReverseMessage() }}</p>
+    <p>{{ methodReverseMessage() }}</p>
+    <button @click="changeMethodMessage">메세지에 1더하기</button>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    // 메서드와 컴퓨드 속성의 차이점은 결국 캐싱을 통해 데이터처럼 제공되느냐 아니냐의차이
+    // 사용자의 액션을 통해 data의 값이 변경되면 화면을 update 하게되는데
+    // 이 때 method 속성에 붙어있는 함수들은 재호출 된다.
+    // computed 속성에 있는 함수들은, 캐싱을 하기 때문에 캐싱된 데이터를 쓰고 함수를 호출하지 않는다.
+    // 이것이 메서드와 컴퓨티드의 차이!
+
+    new Vue({
+        el: "#app",
+        data: {
+            message: "헬로우 뷰!",
+            computedMessage: "헬로우 뷰!",
+        },
+        computed: {
+            computedReverseMessage: function () {
+                console.log("computed call!!");
+                return this.computedMessage.split('').reverse().join('');
+            }
+        },
+        methods: {
+            methodReverseMessage: function () {
+                console.log("method call!!");
+                return this.message.split('').reverse().join('');
+            },
+            changeComputedMessage: function () {
+                this.computedMessage += '1';
+            },
+            changeMethodMessage: function () {
+                this.message += '1';
+            },
+
+        },
+    })
+</script>
+</body>
+</html>

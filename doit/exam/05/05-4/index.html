@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>자바스크립트 표현식 사용 시 주의할 점</title>
+</head>
+<body>
+<section id="app">
+    <a v-if="flag">두잇 vue.js</a>
+    <ul>
+        <li v-for="system in systems">{{system}}</li>
+    </ul>
+
+    <p v-show="flag">두잇 vue.js</p>
+    <h5 :id="uid">뷰 입문서</h5>
+    <button @click="popupAlert">경고창버튼</button>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            flag: true,
+            systems : ['android', 'ios', 'window'],
+            uid : 10,
+        },
+        methods : {
+            popupAlert : function(){
+                return window.alert("경고 창 표시");
+            }
+        },
+    })
+</script>
+</body>
+</html>

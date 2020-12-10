@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>v-on 디렉티브 이용해 이벤트 처리하기</title>
+</head>
+<body>
+<section id="app">
+    <button @click="clickBtn">클릭</button>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+
+        },
+        methods : {
+            clickBtn : function(){
+                return window.alert('Click');
+            }
+        },
+    })
+</script>
+</body>
+</html>

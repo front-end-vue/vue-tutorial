@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>watch 속성 예제</title>
+</head>
+<body>
+<section id="app">
+    <input type="text" name="name" v-model="name">
+    {{name}}
+</section>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    // 메서드와 컴퓨드 속성의 차이점은 결국 캐싱을 통해 데이터처럼 제공되느냐 아니냐의차이
+    // 사용자의 액션을 통해 data의 값이 변경되면 화면을 update 하게되는데
+    // 이 때 method 속성에 붙어있는 함수들은 재호출 된다.
+    // computed 속성에 있는 함수들은, 캐싱을 하기 때문에 캐싱된 데이터를 쓰고 함수를 호출하지 않는다.
+    // 이것이 메서드와 컴퓨티드의 차이!
+
+    new Vue({
+        el: "#app",
+        data: {
+            name: "",
+        },
+        watch: {
+            name: function (data) {
+                console.log("name 값이 바뀝니다." + data);
+            }
+        }
+    })
+</script>
+</body>
+</html>
